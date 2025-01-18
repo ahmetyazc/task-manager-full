@@ -19,7 +19,7 @@ jobs:
         node-version: '16'  # Azure Web App için uygun Node.js sürümünü seçin
 
     - name: Build Frontend
-      working-directory: ./frontend  # Frontend klasör yolu
+      working-directory: ./task-manager  # Frontend klasör yolu
       run: |
         npm install
         npm run build
@@ -27,12 +27,12 @@ jobs:
     - name: Deploy Frontend to Azure
       uses: azure/webapps-deploy@v2
       with:
-        app-name: "<Azure_Frontend_App_Name>"  # Azure Web App adınız
+        app-name: "task-manager-app"  # Azure Web App adınız
         slot-name: "production"
         publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
 
     - name: Build Backend
-      working-directory: ./backend  # Backend klasör yolu
+      working-directory: ./task-manager-backend  # Backend klasör yolu
       run: |
         npm install
         npm run build
@@ -40,6 +40,6 @@ jobs:
     - name: Deploy Backend to Azure
       uses: azure/webapps-deploy@v2
       with:
-        app-name: "<Azure_Backend_App_Name>"  # Azure Web App adınız
+        app-name: "task-manager-app"  # Azure Web App adınız
         slot-name: "production"
         publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
