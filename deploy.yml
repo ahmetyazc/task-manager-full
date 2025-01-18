@@ -1,0 +1,45 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main  # 'main' branch'e push yaptığınızda bu workflow çalışır
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Azure Web App için uygun Node.js sürümünü seçin
+
+    - name: Build Frontend
+      working-directory: ./frontend  # Frontend klasör yolu
+      run: |
+        npm install
+        npm run build
+
+    - name: Deploy Frontend to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: "<Azure_Frontend_App_Name>"  # Azure Web App adınız
+        slot-name: "production"
+        publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
+
+    - name: Build Backend
+      working-directory: ./backend  # Backend klasör yolu
+      run: |
+        npm install
+        npm run build
+
+    - name: Deploy Backend to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: "<Azure_Backend_App_Name>"  # Azure Web App adınız
+        slot-name: "production"
+        publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
