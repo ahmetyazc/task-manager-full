@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "project_tasks",
+  "info": {
+    "singularName": "project-task",
+    "pluralName": "project-tasks",
+    "displayName": "Project Task",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "deadline": {
+      "type": "datetime"
+    },
+    "progress": {
+      "type": "decimal",
+      "max": 100,
+      "min": 0
+    },
+    "taskStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "inprogress",
+        "completed"
+      ],
+      "default": "pending"
+    },
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "project_task"
+    },
+    "team": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::team.team",
+      "inversedBy": "project_task"
+    },
+    "work_packages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::work-package.work-package",
+      "mappedBy": "project_task"
+    }
+  }
+}

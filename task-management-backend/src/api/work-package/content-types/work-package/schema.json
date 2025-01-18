@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "work_packages",
+  "info": {
+    "singularName": "work-package",
+    "pluralName": "work-packages",
+    "displayName": "Work Package"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "percentage": {
+      "type": "decimal",
+      "max": 100,
+      "min": 0
+    },
+    "packageStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "inprogress",
+        "completed"
+      ]
+    },
+    "project_task": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::project-task.project-task",
+      "inversedBy": "work_packages"
+    }
+  }
+}
