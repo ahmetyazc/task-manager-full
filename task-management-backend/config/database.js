@@ -1,7 +1,7 @@
 import path from 'path';
 
 export default ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'sqlite');
+  const client = env('DATABASE_CLIENT', 'mongo'); // 'mongo' olarak değiştirdik
 
   const connections = {
     mysql: {
@@ -41,6 +41,16 @@ export default ({ env }) => {
         schema: env('DATABASE_SCHEMA', 'public'),
       },
       pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+    },
+    mongo: {
+      connection: {
+        uri: env('DATABASE_URL'), // Azure'dan aldığınız MongoDB bağlantı dizesi
+      },
+      options: {
+        ssl: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
     },
     sqlite: {
       connection: {
