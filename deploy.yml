@@ -16,7 +16,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'  # Azure Web App için uygun Node.js sürümünü seçin
+        node-version: '18'  # Azure Web App için uygun Node.js sürümünü seçin
 
     - name: Build Frontend
       working-directory: ./task-manager  # Frontend klasör yolu
